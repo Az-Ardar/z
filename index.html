@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <style>
+        /* Основные стили */
+        .calculator {
+            width: 300px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+            font-family: Arial, sans-serif;
+        }
+        
+        .screen {
+            grid-column: span 4;
+            height: 50px;
+            line-height: 50px;
+            text-align: right;
+            padding-right: 10px;
+            background-color: #eaeaea;
+            border: none;
+            font-size: 24px;
+            overflow-x: hidden;
+        }
+        
+        button {
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 18px;
+        }
+        
+        button:hover {
+            background-color: #ddd;
+        }
+        
+        .func,
+        .beq {
+            background-color: #ffc107;
+            color: white;
+        }
+        
+        .deist {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .dot {
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="calculator">
+    <div class="screen"></div>
+    <button class="bnum">7</button>
+    <button class="bnum">8</button>
+    <button class="bnum">9</button>
+    <button class="deist">/</button>
+    <button class="bnum">4</button>
+    <button class="bnum">5</button>
+    <button class="bnum">6</button>
+    <button class="deist">*</button>
+    <button class="bnum">1</button>
+    <button class="bnum">2</button>
+    <button class="bnum">3</button>
+    <button class="deist">-</button>
+    <button class="bnum">0</button>
+    <button class="dot">.</button>
+    <button class="deist">+</button>
+    <button class="func">C</button>
+    <button class="func">CE</button>
+    <button class="func">MS</button>
+    <button class="func">MR</button>
+    <button class="beq">=</button>
+</div>
+
+<script>
+window.onload = function () {
+    let currDeistv = "";
+    let Arg = 0;
+    let Memory = 0;
+
+    const buttons = document.querySelectorAll('.bnum');
+    for (let button of buttons) {
+        button.addEventListener('click', handleNumberClick);
+    }
+
+    const operations = document.querySelectorAll('.deist');
+    for (let operation of operations) {
+        operation.addEventListener('click', handleOperationClick);
+    }
+
+    const specialFunctions = document.querySelectorAll('.func');
+    for (let func of specialFunctions) {
+        func.addEventListener('click', handleSpecialFunctionClick);
+    }
+
+    const dotButton = document.querySelector('.dot');
+    dotButton.addEventListener('click', handleDotClick);
+
+    const equalButton = document.querySelector('.beq');
+    equalButton.addEventListener('click', handleEqualClick);
+};
+
+function handleNumberClick(event) {
+    const screen = document.querySelector('.screen');
+    const value = event.target.textContent;
+    screen.textContent += value;
+}
+
+function handleDotClick() {
+    const screen = document.querySelector('.screen');
+    const currentText = screen.textContent;
+
+    if (!currentText.includes('.')) {
+        screen.textContent += '.';
+    }
+}
+
+function handleOperationClick(event) {
+    const screen = document.querySelector('.screen');
+    const operator = event.target.textContent;
+    const currentValue = parseFloat(screen.textContent);
+
+    if (isNaN(currentValue)) return;
+
+    Arg = currentValue;
+    currDeistv = operator;
+    screen.textContent = '';
+}
+
+function handleSpecialFunctionClick(event) {
+    const screen = document.querySelector('.screen');
+    const action = event.target.textContent;
+
+    switch (action) {
+        case 'C':
+            screen.textContent = '';
+            currDeistv = '';
+            Arg = 0;
+            break;
+        case 'CE':
+            screen.textContent = '';
+            break;
+        case 'MS':
+            Memory = screen.textContent;
+            break;
+        case 'MR':
+            screen.textContent = Memory;
+            break;
+        default:
+            break;
+    }
+}
+
+function handleEqualClick() {
+    const screen = document.querySelector('.screen');
+    const currentValue = parseFloat(screen.textContent);
+
+    if (isNaN(currentValue)) return;
+
+    let result = 0;
+
+    switch (currDeistv) {
+        case '+':
+            result = Arg + currentValue;
+            break;
+        case '-':
+            result = Arg - currentValue;
+            break;
+        case '*':
+            result = Arg * currentValue;
+            break;
+        case '/':
+            result = Arg / currentValue;
+            result = Number(result.toFixed(2)); // Округляем до двух знаков после запятой
+            break;
+        default:
+            break;
+    }
+
+    screen.textContent = result;
+}
+</script>
+</body>
+</html>
