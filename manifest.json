@@ -1,8 +1,11 @@
 {
+  "start_url": "calkulator",
+  "dir": "auto",
+  "scope": "calkulator",
+  "lang": "ru",
   "name": "calkulator",
   "theme_color": "#000000",
   "background_color": "#000000",
-  "short_name": "Call",
-  "id": "fiourgeuioghruighfduijk",
-  "description": "sfghdgfjhytdghdyy"
+  "short_name": "calkulator",
+  "id": "calkulator"
 }
