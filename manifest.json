@@ -1,11 +1,8 @@
 {
-  "start_url": "calkulator",
-  "dir": "auto",
-  "scope": "calkulator",
-  "lang": "ru",
   "name": "calkulator",
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#652424",
+  "background_color": "#d42222",
   "short_name": "calkulator",
-  "id": "calkulator"
+  "id": "calkulator",
+  "description": "dgfdgs"
 }
